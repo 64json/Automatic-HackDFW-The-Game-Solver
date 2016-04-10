@@ -81,7 +81,7 @@ function submitAll(plains, index) {
 }
 
 var CronJob = require('cron').CronJob;
-new CronJob('0 */5 * * * *', function () {
+new CronJob('0 */7 * * * *', function () {
     console.log('————————————————');
     console.log('cron job started');
     getToken(function (token) {
