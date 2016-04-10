@@ -8,8 +8,7 @@ function submit(answer, callback) {
         {json: {answer: answer}},
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body);
-                callback(body.status);
+                callback(body);
             } else {
                 callback(null);
             }
@@ -72,9 +71,9 @@ function submitAll(plains, index) {
     if (typeof index === 'undefined') index = 0;
     if (index >= plains.length) return;
     console.log('submit(' + plains[index] + ')');
-    submit(plains[index], function (status) {
-        console.log('status = ' + status);
-        if (status === 'error') {
+    submit(plains[index], function (body) {
+        console.log(body);
+        if (body.status === 'success' && !body.result) {
             submitAll(plains, index + 1);
         }
     });
@@ -103,3 +102,28 @@ new CronJob('0 */7 * * * *', function () {
 }, null, true);
 
 process.stdin.resume();
+
+
+/*request.post('https://hdfw-tehgame.herokuapp.com/auth/login',
+ {json: {email: email, password: password}},
+ function (error, response, body) {
+ if (!error && response.statusCode == 200) {
+ console.log(body);*/
+request.post('https://hdfw-tehgame.herokuapp.com/auth/profile',
+    {
+        headers: {
+            'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTM1NiwiZW1haWwiOiJwYXJranM4MTRAZ21haWwuY29tIiwicm9sZSI6ImhhY2tlciIsImlhdCI6MTQ2MDI2ODg0MCwiZXhwIjoxNDYwMjgzMjQwfQ.IjolhEo4GxpBYKwEx2-bGwuU-UEgUUGsQ6r9nHmKEik'
+        },
+        json: {answer: 'answer'}
+    },
+    function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        } else {
+            console.error(body);
+        }
+    });
+/*        } else {
+ console.error(body);
+ }
+ });*/
