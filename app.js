@@ -80,7 +80,7 @@ function submitAll(plains, index) {
 }
 
 var CronJob = require('cron').CronJob;
-new CronJob('0 */7 * * * *', function () {
+new CronJob('0 */3 * * * *', function () {
     console.log('————————————————');
     console.log('cron job started');
     getToken(function (token) {
@@ -109,7 +109,7 @@ process.stdin.resume();
  function (error, response, body) {
  if (!error && response.statusCode == 200) {
  console.log(body);*/
-request.post('https://hdfw-tehgame.herokuapp.com/auth/profile',
+/*request.post('https://hdfw-tehgame.herokuapp.com/auth/profile',
     {
         headers: {
             'Authorization': 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTM1NiwiZW1haWwiOiJwYXJranM4MTRAZ21haWwuY29tIiwicm9sZSI6ImhhY2tlciIsImlhdCI6MTQ2MDI2ODg0MCwiZXhwIjoxNDYwMjgzMjQwfQ.IjolhEo4GxpBYKwEx2-bGwuU-UEgUUGsQ6r9nHmKEik'
@@ -122,7 +122,7 @@ request.post('https://hdfw-tehgame.herokuapp.com/auth/profile',
         } else {
             console.error(body);
         }
-    });
+    });*/
 /*        } else {
  console.error(body);
  }
