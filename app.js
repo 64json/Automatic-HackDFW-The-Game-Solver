@@ -1,7 +1,9 @@
+var CronJob = require('cron').CronJob;
 var request = require('request');
 
 var email = process.env.EMAIL;
 var password = process.env.PASSWORD;
+var token = null;
 
 var Caesar = require('./caesar');
 var Vigenere = require('./vigenere');
@@ -15,7 +17,8 @@ function getCipher(token, challenge, callback) {
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 if (body.status === 'error') {
-                    console.log(body.error);
+                    console.log(challenge + ': ' + body.error);
+                    if (~body.error.indexOf('authorization')) getToken();
                     callback(null);
                 } else {
                     callback(body.challenge.start);
@@ -27,42 +30,50 @@ function getCipher(token, challenge, callback) {
         });
 }
 
-function getToken(callback) {
+function getToken(next) {
     request.post('https://hdfw-tehgame.herokuapp.com/auth/login',
         {json: {email: email, password: password}},
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                callback(body.token);
+                token = body.token;
+                console.log('token = ' + token);
+                if (next) next();
             } else {
                 console.log(error || response.statusCode);
-                callback(null);
             }
         });
 }
 
-var CronJob = require('cron').CronJob;
-new CronJob('0 * * * * *', function () {
+getToken(function () {
+    new CronJob('0 * * * * *', function () {
+        console.log('————————————————');
+        console.log('cron job started: caesar');
+        getCipher(token, 'caesar', function (cipher) {
+            if (cipher) {
+                console.log('caesar cipher = ' + cipher);
+
+                Caesar(email, cipher);
+            }
+        });
+    }, null, true);
+
+    new CronJob('30 * * * * *', function () {
+        console.log('————————————————');
+        console.log('cron job started: vigenere');
+        getCipher(token, 'vigenere', function (cipher) {
+            if (cipher) {
+                console.log('vigenere cipher = ' + cipher);
+
+                Vigenere(token, cipher);
+            }
+        });
+    }, null, true);
+});
+
+new CronJob('0 0 * * * *', function () {
     console.log('————————————————');
-    console.log('cron job started');
-    getToken(function (token) {
-        if (token) {
-            console.log('token = ' + token);
-            getCipher(token, 'caesar', function (cipher) {
-                if (cipher) {
-                    console.log('caesar cipher = ' + cipher);
-
-                    Caesar(email, cipher);
-                }
-            });
-            getCipher(token, 'vigenere', function (cipher) {
-                if (cipher) {
-                    console.log('vigenere cipher = ' + cipher);
-
-                    Vigenere(token, cipher);
-                }
-            });
-        }
-    });
+    console.log('cron job started: login');
+    getToken();
 }, null, true);
 
 process.stdin.resume();

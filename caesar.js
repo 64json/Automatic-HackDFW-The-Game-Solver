@@ -15,9 +15,9 @@ function submit(email, answer, callback) {
 function submitAll(email, plains, index) {
     if (typeof index === 'undefined') index = 0;
     if (index >= plains.length) return;
-    console.log('caesar submit(' + plains[index] + ')');
+    console.log('caesar: submit(' + plains[index] + ')');
     submit(email, plains[index], function (body) {
-        console.log('caesar result: ');
+        console.log('caesar: result = ');
         console.log(body);
         if (body.status === 'success' && !body.result) {
             submitAll(email, plains, index + 1);
@@ -44,7 +44,7 @@ function solve(cip, callback) {
 module.exports = function (email, cipher) {
     solve(cipher, function (plains) {
         if (plains) {
-            console.log('caesar plains = ' + plains);
+            console.log('caesar: plains = ' + plains);
             submitAll(email, plains);
         }
     });

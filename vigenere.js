@@ -59,7 +59,6 @@ function solve(cip, callback) {
         var char = cip.charCodeAt(i);
         areUppers.push(65 <= char && char <= 90);
     }
-    console.log(areUppers);
     cip = cip.toLowerCase();
     var pln = '';
     var cnt = 0;
@@ -75,9 +74,9 @@ function solve(cip, callback) {
 module.exports = function (token, cipher) {
     solve(cipher, function (answer) {
         if (answer) {
-            console.log('vigenere answer = ' + answer);
+            console.log('vigenere: answer = ' + answer);
             submit(token, answer, function (body) {
-                console.log('vigenere result: ');
+                console.log('vigenere: result = ');
                 console.log(body);
             });
         }
