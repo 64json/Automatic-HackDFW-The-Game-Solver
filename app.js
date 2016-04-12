@@ -7,6 +7,7 @@ var token = null;
 
 var Caesar = require('./caesar');
 var Vigenere = require('./vigenere');
+var Playfair = require('./playfair');
 
 function getCipher(token, challenge, callback) {
     request('https://hdfw-tehgame.herokuapp.com/challenge/' + challenge,
@@ -57,7 +58,7 @@ getToken(function () {
         });
     }, null, true);
 
-    new CronJob('30 * * * * *', function () {
+    new CronJob('20 * * * * *', function () {
         console.log('————————————————');
         console.log('cron job started: vigenere');
         getCipher(token, 'vigenere', function (cipher) {
@@ -65,6 +66,18 @@ getToken(function () {
                 console.log('vigenere cipher = ' + cipher);
 
                 Vigenere(token, cipher);
+            }
+        });
+    }, null, true);
+
+    new CronJob('40 * * * * *', function () {
+        console.log('————————————————');
+        console.log('cron job started: playfair');
+        getCipher(token, 'playfair', function (cipher) {
+            if (cipher) {
+                console.log('playfair cipher = ' + cipher);
+
+                Playfair(token, cipher);
             }
         });
     }, null, true);
