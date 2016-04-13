@@ -1,4 +1,7 @@
-# How to run #
+# Automatic *HackDFW The Game* Solver #
+## 35 points every 30 minutes ##
+
+### How to run ###
 ```
 #!
 git clone https://parkjs814@bitbucket.org/parkjs814/hackdfwgame.git
@@ -10,7 +13,7 @@ npm install
 EMAIL=(your email) PASSWORD=(your password) npm start
 
 ```
-# References #
+### References ###
 
 * [https://github.com/kayellpeee/Vigenere-cipher](Link URL)
 
