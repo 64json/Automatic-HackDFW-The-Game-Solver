@@ -86,6 +86,7 @@ function decode(cip, callback) {
 module.exports = function (token, cipher) {
     decode(cipher, function (plain) {
         if (plain) {
+            plain = plain.replace('XVXV', 'X');
             console.log('playfair: plain = ' + plain);
             plns = [];
             pln = plain.split('');
