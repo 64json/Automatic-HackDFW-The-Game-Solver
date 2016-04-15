@@ -1,5 +1,8 @@
 var request = require('request');
 
+var failedCipher = null;
+var currentCipher = null;
+
 function submit(token, answer, callback) {
     request.post('https://hdfw-tehgame.herokuapp.com/challenge/playfair/verify',
         {
@@ -17,7 +20,10 @@ function submit(token, answer, callback) {
 
 function submitAll(token, plains, index) {
     if (typeof index === 'undefined') index = 0;
-    if (index >= plains.length) return;
+    if (index >= plains.length) {
+        failedCipher = currentCipher;
+        return;
+    }
     console.log('playfair: submit(' + plains[index] + ')');
     submit(token, plains[index], function (body) {
         console.log('playfair: result = ');
@@ -84,6 +90,11 @@ function decode(cip, callback) {
 }
 
 module.exports = function (token, cipher) {
+    currentCipher = cipher;
+    if (failedCipher === cipher) {
+        console.log('playfair: cannot find the answer. Blame Jason.');
+        return;
+    }
     decode(cipher, function (plain) {
         if (plain) {
             plain = plain.replace('XVXV', 'X');
