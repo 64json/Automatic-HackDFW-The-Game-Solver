@@ -1,5 +1,6 @@
 var request = require('request');
 var fs = require('fs');
+var path = require('path');
 var streamToBuffer = require('stream-to-buffer');
 var morseLib = require('morse');
 
@@ -30,7 +31,7 @@ function init(index, done) {
     }
     if (index >= parts.length) return done();
     var part = parts[index];
-    var stream = fs.createReadStream('mp3/' + part + '.mp3');
+    var stream = fs.createReadStream(path.join(__dirname, './mp3/' + part + '.mp3'));
     streamToBuffer(stream, function (err, buffer) {
         if (err) return console.log(err);
         buffers[index] = buffer;
