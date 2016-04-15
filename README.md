@@ -13,8 +13,8 @@ EMAIL=(your email) PASSWORD=(your password) npm start
 ```
 ### References ###
 
-* [https://github.com/kayellpeee/Vigenere-cipher](Link URL)
+* [https://github.com/kayellpeee/Vigenere-cipher](https://github.com/kayellpeee/Vigenere-cipher)
 
-* [http://www.dcode.fr/playfair-cipher](Link URL)
+* [http://www.dcode.fr/playfair-cipher](http://www.dcode.fr/playfair-cipher)
 
-* [https://github.com/CyrusRoshan/morse-mp3](Link URL)
+* [https://github.com/CyrusRoshan/morse-mp3](https://github.com/CyrusRoshan/morse-mp3)
