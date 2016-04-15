@@ -75,7 +75,7 @@ module.exports = function (token, cipher) {
     getMorse(buffer, function (morse) {
         if (morse) {
             console.log('morse: morse = ' + morse);
-            var answer = morseLib.decode(morse);
+            var answer = morseLib.decode(morse).replace(/ /g, '');
             console.log('morse: answer = ' + answer);
             submit(token, answer, function (body) {
                 console.log('morse: result = ');
