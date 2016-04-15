@@ -88,7 +88,7 @@ getToken(function () {
         console.log('cron job started: morse');
         getCipher(token, 'morse-mp3', function (cipher) {
             if (cipher) {
-                console.log('morse cipher = ' + cipher);
+                console.log('morse cipher = ' + cipher.substring(0, 100) + ' ...');
 
                 Morse(token, cipher);
             }
